@@ -57,19 +57,8 @@
 		// the first function that runs when the page loads
 		const first_load = () => { 
 
-			document.querySelector('#main-image').src = "images/" + image_names[0] + ".jpg";
-
-			image_names.forEach( (image_names, index) => {
-
-			let new_thumb = document.createElement('img');
-
-			new_thumb.src = "images/" + image_names + "-small.jpg";	
-
-			document.querySelector('#thumbnail-area').appendChild(new_thumb);
-
-			console.log(new_thumb);
-
-		});
+			set_main_image(0)
+			set_thumbnails()
 
 			// TODO: set the main image to the first image in the array (index 0)
 			// TODO: set the thumbnail images		
@@ -77,6 +66,7 @@
 	
 		const set_main_image = (index) => {
 			
+			document.querySelector('#main-image').src = "images/" + image_names[index] + ".jpg";
 			// TODO: set the main-image src image based on the passed parameter	  
 	
 			// TODO: set the hidden textbox to the current index (if you take this approach)	    
@@ -87,7 +77,24 @@
 	
 		const set_thumbnails = () => {
 
+			image_names.forEach( (image_names, index) => {
 
+				let new_thumb = document.createElement('img');
+
+				new_thumb.src = "images/" + image_names + "-small.jpg";	
+
+				new_thumb.classList.add("clickable");
+				new_thumb.addEventListener("click",() => {
+
+					set_main_image(index);
+
+				});
+
+				document.querySelector('#thumbnail-area').appendChild(new_thumb);
+
+				console.log(new_thumb);
+
+			});
 			// TODO: declare a variable for the thumbnail strip html (optional)
 	
 			// TODO: loop through the global array and build the html
