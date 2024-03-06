@@ -3,15 +3,35 @@
 <head>
 	<meta charset="UTF-8">
 	<title>MDIA 2294</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 	
 	<style>	    
+		* {
+			margin: 0 auto;
+		}
+		body {
+			font-family: "Press Start 2P", system-ui;
+			display: flex;
+			flex-direction: column;
+			background-color: pink;
+		}
 	    img {
 	        margin:5px;
+			padding: 2vmin;
+			background-color: white;
+			border-radius: 20px;
 	    }
+		h1 {
+			padding-top: 5vmin;
+			color: rgb(255, 255, 255);
+		}
 	    
+		/* added opacity 0.5 as a default for the thumbnails */
 	    img.clickable{
 	        cursor:pointer;
-			opacity: 0.7;
+			opacity: 0.5;
 	    }
 	
 	</style>
@@ -19,7 +39,7 @@
 </head>
 <body>
 
-	<h1>MDIA 2294: Assignment 2</h1>
+	<h1>My Husbands</h1>
 	
 	<div style="text-align:center;">
 	    <table>
@@ -51,30 +71,30 @@
 	</div>
     
 	<script>
-		//making variables that individually selects the (first, prev, next, last) buttons in the html
+		//making variables that individually selects the (first, prev, next, last) buttons in the html by targeting the ID's and using  document.queryselector 
 		const first_img = document.querySelector("#first-btn");
 		const last_img = document.querySelector("#last-btn");
 		const next_img = document.querySelector("#next-btn");
 		const prev_img = document.querySelector("#prev-btn");
-		// setting the names of the images and making it an array
+		// setting the names of the images and making it an array indexed from 0-4
 		const image_names = ["chrollo", "gojo", "stark", "miyamura", "tengen"];
 
 		// the first function that runs when the page loads
 		const first_load = () => { 
 
-			//setting the main image on load as the first in the array (0)
+			//setting and loading the main image on load as the first in the array (0)
 			set_main_image(0)
 			//loads the thumbnails
 			set_thumbnails()
-			//makes the first thumbnail 100% opacity
+			//loads the first thumbnail and makes the first thumbnail 100% opacity
 			update_thumbnails(0).style.opacity = "1";
 		}
 	
+		// function to set the main image
 		const set_main_image = (index) => {
 			
 			document.querySelector('#main-image').src = "images/" + image_names[index] + ".jpg";
 			// TODO: set the main-image src image based on the passed parameter	  
-	
 			// TODO: set the hidden textbox to the current index (if you take this approach)	
 			
 			current_index = index;
@@ -116,11 +136,11 @@
 		const update_thumbnails = (current_index) => {
 			// TODO: you'll need to loop through all thumbnails
 			//		- turn on an indicator (eg opacity:1.0) if it's the selected thumb
-			//		- turn off the indicator (eg opacity:0.75) if it's not
+			//		- turn off the indicator (eg opacity:0.5) if it's not
 			 const image_loop = document.querySelectorAll(".clickable");
 
 			 image_loop.forEach((name, index) => {
-				(current_index === index) ?  name.style.opacity = "1" : name.style.opacity = "0.7"
+				(current_index === index) ?  name.style.opacity = "1" : name.style.opacity = "0.5"
 			 })
 		} 
 	
@@ -137,24 +157,30 @@
 		last_img.addEventListener("click", set_nav_last);
 	
 		const set_nav_next = () => {
+
 			//if the current index is greater or equal to 4 (which is the highest index number) then go back to 0, if not then add +1
 			const set_next_img = (current_index >= image_names.length - 1) ? 0 : current_index +1;
 			//sets the main image to the variable set_next_img
 			set_main_image(set_next_img);
-			// TODO: move to the next image, unless at the end in which case show the first image
+
 		}
+
 		//adds event listener to the next_img button that runs the function set_nav_next
 		next_img.addEventListener("click", set_nav_next);
 	
+		// making a function called set_nav_prev which makes the button go back one image.
 		const set_nav_prev = () => {
+
 			//if the current index is less than or equal to 0 (which is the lowest index number) then go to 4 , if not then minus 1 in the index number
 			const set_prev_img = (current_index <= 0) ? image_names.length - 1 : current_index -1;
 			//sets the main image to the variable set_prev_img
 			set_main_image(set_prev_img);
-			// TODO: move to the previous image, unless at the end in which case show the last image
+
 		}	
+
 		//adds event listener to the prev_img button that runs the function set_nav_prev
 		prev_img.addEventListener("click", set_nav_prev);
+
 		// on load runs the first_load function
 		window.addEventListener("load", first_load);
 
