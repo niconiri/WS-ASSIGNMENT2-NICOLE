@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../week6/week-6-ex/complete"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "WS-ASSIGNMENT2-NICOLE"
+	}
+}

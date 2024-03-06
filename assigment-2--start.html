@@ -11,6 +11,7 @@
 	    
 	    img.clickable{
 	        cursor:pointer;
+			opacity: 0.7;
 	    }
 	
 	</style>
@@ -43,13 +44,18 @@
 	            </td>
 	            <td>
 	                <img src="images/next.png" id="next-btn" />            
-	                <img src="images/last.png" id="prev-btn" />
+	                <img src="images/last.png" id="last-btn" />
 	            </td>
 	        </tr>	    
 	    </table>       
 	</div>
     
 	<script>
+
+		let current_index = 0
+		const first_img = document.querySelector("#first-btn");
+		const last_img = document.querySelector("#last-btn");
+		const next_img = document.querySelector("#next-btn");
 
 		// setting the names of the images
 		const image_names = ["chrollo", "gojo", "stark", "miyamura", "tengen"];
@@ -58,10 +64,10 @@
 		const first_load = () => { 
 
 			set_main_image(0)
-			set_thumbnails()
-
 			// TODO: set the main image to the first image in the array (index 0)
+			set_thumbnails()
 			// TODO: set the thumbnail images		
+			update_thumbnails(0).style.opacity = "1";
 		}
 	
 		const set_main_image = (index) => {
@@ -69,30 +75,33 @@
 			document.querySelector('#main-image').src = "images/" + image_names[index] + ".jpg";
 			// TODO: set the main-image src image based on the passed parameter	  
 	
-			// TODO: set the hidden textbox to the current index (if you take this approach)	    
-	
+			// TODO: set the hidden textbox to the current index (if you take this approach)	
+			
+			current_index = index;
+			
 			// update the thumbnails based on the current selection
 			update_thumbnails(index);
 		}
 	
 		const set_thumbnails = () => {
 
-			image_names.forEach( (image_names, index) => {
+			image_names.forEach( (name, index) => {
 
 				let new_thumb = document.createElement('img');
 
-				new_thumb.src = "images/" + image_names + "-small.jpg";	
+				new_thumb.src = "images/" + name + "-small.jpg";	
 
 				new_thumb.classList.add("clickable");
 				new_thumb.addEventListener("click",() => {
 
 					set_main_image(index);
 
+
 				});
 
 				document.querySelector('#thumbnail-area').appendChild(new_thumb);
 
-				console.log(new_thumb);
+				// console.log(new_thumb);
 
 			});
 			// TODO: declare a variable for the thumbnail strip html (optional)
@@ -108,21 +117,30 @@
 			// TODO: you'll need to loop through all thumbnails
 			//		- turn on an indicator (eg opacity:1.0) if it's the selected thumb
 			//		- turn off the indicator (eg opacity:0.75) if it's not
+			 const image_loop = document.querySelectorAll(".clickable");
+
+			 image_loop.forEach((name, index) => {
+				(current_index === index) ?  name.style.opacity = "1" : name.style.opacity = "0.7"
+			 })
 		} 
 	
 		const set_nav_first = () => {
 			// TODO: navigate to the first image (this is the easy one since it's always index zero)
-			
+			set_main_image(0);
 		}
+		first_img.addEventListener("click", set_nav_first);
 	
 		const set_nav_last = () => {
+			set_main_image(4);
 			// TODO: navigate to the last image (should work for any size array)
 		}
+		last_img.addEventListener("click", set_nav_last);
 	
 		const set_nav_next = () => {
+			set_main_image(+1);
 			// TODO: move to the next image, unless at the end in which case show the first image
-			
 		}
+		next_img.addEventListener("click", set_nav_next);
 	
 		const set_nav_prev = () => {
 			// TODO: move to the previous image, unless at the end in which case show the last image
