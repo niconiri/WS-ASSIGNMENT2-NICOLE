@@ -12,6 +12,8 @@
 			margin: 0 auto;
 		}
 		body {
+			background: url("./images/cutebg.png");
+			background-size: contain;
 			font-family: "Press Start 2P", system-ui;
 			display: flex;
 			flex-direction: column;
@@ -52,7 +54,6 @@
 	            <td style="text-align:center;">
                     <div><img id="main-image" alt="Main Image" /></div>
 
-                    <!-- you may or may not use this hidden textbox-->
                     <div><input id="current-index" /></div>    
                 </td>
 	            <td></td>
@@ -75,6 +76,7 @@
 	</div>
     
 	<script>
+		// Assignment 2 by Nicole Espiritu A01380778
 		//making variables that individually selects the (first, prev, next, last) buttons in the html by targeting the ID's and using  document.queryselector 
 		const first_img = document.querySelector("#first-btn");
 		const last_img = document.querySelector("#last-btn");
@@ -131,49 +133,53 @@
 		} 
 		// creates a function with the parameters of current_index
 		const update_thumbnails = (current_index) => {
-			// creates a variable that targets all the elements in the document with the class clickable
+			// creates a variable that targets all the elements in the document with the class .clickable
 			 const image_loop = document.querySelectorAll(".clickable");
-
+			 // making a forEach loop from the variable image_loop and grabs the name and index information
 			 image_loop.forEach((name, index) => {
+				// if the current_index value of the element with the .clickable class is clicked then the element opacity is 1. if it is not the indexed number that is clicked then the opacity is .5
 				(current_index === index) ?  name.style.opacity = "1" : name.style.opacity = "0.5"
 			 })
 		} 
-	
+		// makes a function to set the first image to the first indexed item in the array (0)
 		const set_nav_first = () => {
-			// TODO: navigate to the first image (this is the easy one since it's always index zero)
+			//set_main_image index number set to the first one (0)
 			set_main_image(0);
 		}
+		// the button first_img with the targeted ID in the html will now have an event listener that will be active on click. when clicked the main image will be set to the item indexed 0 (chrollo)
 		first_img.addEventListener("click", set_nav_first);
 	
+		// makes a function to set the last image to the last indexed item in the array, but will work with any size array
 		const set_nav_last = () => {
-			set_main_image(4);
-			// TODO: navigate to the last image (should work for any size array)
+			set_main_image(image_names.length - 1);
 		}
+		// the button last_img with the targeted ID in the html will now have an event listener that will be active on click. when clicked the main image will be set to the item that is indexed the length of the array(5) - 1 since the index starts at 0
 		last_img.addEventListener("click", set_nav_last);
 	
+		// makes a function to go to the next item in the array, will work with any size array
 		const set_nav_next = () => {
 
-			//if the current index is greater or equal to 4 (which is the highest index number) then go back to 0, if not then add +1
+			//making a variable: if the current_index is greater or equal to the length of the index (5) - 1 (because index starts at 0), then go back to 0, if not then add +1
 			const set_next_img = (current_index >= image_names.length - 1) ? 0 : current_index +1;
-			//sets the main image to the variable set_next_img
+			//sets the main image to the variable set_next_img which is described above - this updates the main image to the next item in the array
 			set_main_image(set_next_img);
 
 		}
 
-		//adds event listener to the next_img button that runs the function set_nav_next
+		//adds event listener on click to the next_img button that runs the function set_nav_next
 		next_img.addEventListener("click", set_nav_next);
 	
-		// making a function called set_nav_prev which makes the button go back one image.
+		// makes a function to go to the prev item in the array, will work with any size array
 		const set_nav_prev = () => {
 
-			//if the current index is less than or equal to 0 (which is the lowest index number) then go to 4 , if not then minus 1 in the index number
+			//making a variable: if the current_index is less than or equal to 0 (which is the lowest index number) then go to the end of the array length (5) - 1 (to account to index starting at 0) , if not then minus 1 in the index number
 			const set_prev_img = (current_index <= 0) ? image_names.length - 1 : current_index -1;
-			//sets the main image to the variable set_prev_img
+			//sets the main image to the variable set_prev_img which is described above - this updates the main image to the previous item in the array
 			set_main_image(set_prev_img);
 
 		}	
 
-		//adds event listener to the prev_img button that runs the function set_nav_prev
+		//adds event listener on click to the prev_img button that runs the function set_nav_prev
 		prev_img.addEventListener("click", set_nav_prev);
 
 		// on load runs the first_load function
