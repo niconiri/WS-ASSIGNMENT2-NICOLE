@@ -33,6 +33,10 @@
 	        cursor:pointer;
 			opacity: 0.5;
 	    }
+		/* added pointer when hovering over the buttons */
+		#last-btn, #first-btn, #prev-btn, #next-btn {
+			cursor: pointer;
+		}
 	
 	</style>
 	
@@ -82,61 +86,52 @@
 		// the first function that runs when the page loads
 		const first_load = () => { 
 
-			//setting and loading the main image on load as the first in the array (0)
+			//loading set_main_image fuction and setting the value to 0 so it targets the first item in the array
 			set_main_image(0)
-			//loads the thumbnails
+			//loads the set_thumbnails funciton
 			set_thumbnails()
-			//loads the first thumbnail and makes the first thumbnail 100% opacity
+			//loads the update_thumbnails function and sets the value to 0 so it targets the first item in the array and makes that thumbnail 100% opacity
 			update_thumbnails(0).style.opacity = "1";
 		}
 	
-		// function to set the main image
+		// function to set the main image with the parameter being index
 		const set_main_image = (index) => {
 			
+			// sets the #main-image src image based on the passed parameter	within the string. 
 			document.querySelector('#main-image').src = "images/" + image_names[index] + ".jpg";
-			// TODO: set the main-image src image based on the passed parameter	  
-			// TODO: set the hidden textbox to the current index (if you take this approach)	
-			
+			// calling the variable current_index to change the value to the current index number
 			current_index = index;
 			
-			// update the thumbnails based on the current selection
+			// update the thumbnails based on the index number that is passed through
 			update_thumbnails(index);
 		}
-	
+	// function to make the the thumbnails based on all of the values in the array
 		const set_thumbnails = () => {
-
+			// making a forEach loop from the variable image_names and grabs the name and index information
 			image_names.forEach( (name, index) => {
-
+				// create variable new_thumb - when called it creates an IMG element
 				let new_thumb = document.createElement('img');
-
+				// in the new_thumb img element this adds the string below to make a path in the "src"
+				//name value cycles each time forEach loops with a new name in the array
 				new_thumb.src = "images/" + name + "-small.jpg";	
-
+				//  adds the class "clickable to the im elements made"
 				new_thumb.classList.add("clickable");
+				// when you click on the new img elements it sets the index number to the index number of the element made from the array
 				new_thumb.addEventListener("click",() => {
 
 					set_main_image(index);
 
 
 				});
-
+				//creates child elements within the html with appendChild by calling the new_thumb. places it in the #thumbnail-area
 				document.querySelector('#thumbnail-area').appendChild(new_thumb);
 
-				// console.log(new_thumb);
-
 			});
-			// TODO: declare a variable for the thumbnail strip html (optional)
-	
-			// TODO: loop through the global array and build the html
-			//       - add an onclick handler to each thumbnail to call set_main_image(index)
-	
-			// TODO: add the html to the divThumbArea
 	
 		} 
-	
+		// creates a function with the parameters of current_index
 		const update_thumbnails = (current_index) => {
-			// TODO: you'll need to loop through all thumbnails
-			//		- turn on an indicator (eg opacity:1.0) if it's the selected thumb
-			//		- turn off the indicator (eg opacity:0.5) if it's not
+			// creates a variable that targets all the elements in the document with the class clickable
 			 const image_loop = document.querySelectorAll(".clickable");
 
 			 image_loop.forEach((name, index) => {
